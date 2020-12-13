@@ -13,7 +13,7 @@ def get_closest_tweet(user_text):
     result = []
     for tweet_id, confidence in model.docvecs.most_similar([vector], topn=20):
         tweet = data.iloc[tweet_id].to_dict()
-        result.append({**tweet, 'confidence': confidence, 'id': int(tweet['id']), 'retweet': bool(tweet['retweet'])})
+        result.append({**tweet, 'confidence': confidence, 'retweet': bool(tweet['retweet'])})
 
     return result
 

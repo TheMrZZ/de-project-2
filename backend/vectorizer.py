@@ -15,6 +15,9 @@ tokenizer = Tokenizer(nlp.vocab)
 current_dir = path.dirname(__file__)
 MODEL_FILE_NAME = path.join(current_dir, 'model_file')
 
+# IMPORT DATA
+data = pd.read_csv(path.join(current_dir, 'tweets.csv'))
+
 
 def normalize(text, remove_stopwords):
     # Lower
@@ -54,8 +57,7 @@ def load_model():
 
 
 def main():
-    # IMPORT DATA
-    data = pd.read_csv(path.join(current_dir, 'tweets.csv'))
+    # get tokens
     data.loc[:, 'tokens'] = data.text.apply(process)
 
     sentences = []

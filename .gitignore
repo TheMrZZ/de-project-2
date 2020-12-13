@@ -1,5 +1,5 @@
 backend/tweets.csv
-backend/model_file
+backend/model_file*
 
 # Created by https://www.toptal.com/developers/gitignore/api/pycharm,python,flask,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=pycharm,python,flask,intellij

@@ -11,7 +11,7 @@ def get_closest_tweet(user_text):
     vector = model.infer_vector(tokens)
 
     result = []
-    for tweet_id, confidence in model.docvecs.most_similar([vector])[:3]:
+    for tweet_id, confidence in model.docvecs.most_similar([vector], topn=20):
         tweet = data.iloc[tweet_id].to_dict()
         result.append({**tweet, 'confidence': confidence})
 

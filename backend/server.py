@@ -1,19 +1,21 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from classifier import predict
+try:
+    from .search import get_closest_tweet
+except ImportError:
+    from search import get_closest_tweet
 
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/classify_sentence', methods=['POST'])
+@app.route('/similar_tweets', methods=['POST'])
 def classify_sentence():
-    text = request.json['sentence']
+    text = request.json['text']
 
-    return jsonify({
-        'sentiment': predict(text)
-    })
+    tweets = get_closest_tweet(text)
+    return jsonify(tweets)
 
 
 if __name__ == '__main__':

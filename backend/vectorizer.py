@@ -12,7 +12,8 @@ nlp = English()
 # Create a blank Tokenizer with just the English vocab
 tokenizer = Tokenizer(nlp.vocab)
 
-MODEL_FILE_NAME = 'model_file'
+current_dir = path.dirname(__file__)
+MODEL_FILE_NAME = path.join(current_dir, 'model_file')
 
 
 def normalize(text, remove_stopwords):
@@ -54,8 +55,6 @@ def load_model():
 
 def main():
     # IMPORT DATA
-    current_dir = path.dirname(__file__)
-
     data = pd.read_csv(path.join(current_dir, 'tweets.csv'))
     data.loc[:, 'tokens'] = data.text.apply(process)
 
@@ -64,10 +63,10 @@ def main():
         sentences.append(TaggedDocument(tweet_tokens, [i]))
 
     # MODEL PARAMETERS
-    size = 300
-    context_window = 50
+    size = 30
+    context_window = 10
     min_count = 1
-    max_iter = 200
+    max_iter = 20
 
     # BUILD MODEL
     model = Doc2Vec(

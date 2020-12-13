@@ -17,6 +17,8 @@ MODEL_FILE_NAME = path.join(current_dir, 'model_file')
 
 # IMPORT DATA
 data = pd.read_csv(path.join(current_dir, 'tweets.csv'))
+data['id'] = data['Unnamed: 0']
+data = data.drop(columns=['Unnamed: 0'])
 
 
 def normalize(text, remove_stopwords):
@@ -61,8 +63,8 @@ def main():
     data.loc[:, 'tokens'] = data.text.apply(process)
 
     sentences = []
-    for i, tweet_tokens in enumerate(data['tokens'].values.tolist()):
-        sentences.append(TaggedDocument(tweet_tokens, [i]))
+    for tweet_id, tweet_tokens in zip(data['id'].values.tolist(), data['tokens'].values.tolist()):
+        sentences.append(TaggedDocument(tweet_tokens, [tweet_id]))
 
     # MODEL PARAMETERS
     size = 30

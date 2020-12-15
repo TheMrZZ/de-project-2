@@ -11,10 +11,9 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
       }
     }
 
-    stage('Archive data') {
+    stage('Install requirements') {
       steps {
-        archiveArtifacts 'backend/model_file'
-        archiveArtifacts 'backend/tweets.csv'
+        powershell 'C:/Users/Florian/AppData/Local/Programs/Python/Python38/python.exe -m pip install -r requirements.txt'
       }
     }
 
@@ -23,12 +22,32 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
         branch 'feature*'
       }
       steps {
-        powershell '''
-C:/Users/Florian/AppData/Local/Programs/Python/Python38/python.exe -m pip install -r requirements.txt
-C:/Users/Florian/AppData/Local/Programs/Python/Python38/python.exe backend/test_integration.py
-'''
+        powershell 'C:/Users/Florian/AppData/Local/Programs/Python/Python38/python.exe backend/test_integration.py'
+        powershell 'C:/Users/Florian/AppData/Local/Programs/Python/Python38/python.exe backend/test_unit.py'
       }
     }
 
+    stage('Run stress test') {
+      when {
+        branch 'develop'
+      }
+
+      steps {
+        powershell 'C:/Users/Florian/AppData/Local/Programs/Python/Python38/python.exe backend/test_stress.py'
+      }
+    }
+
+    stage('Push on main') {
+      when {
+        branch 'develop'
+      }
+
+      steps {
+        powershell '''
+git checkout main
+git merge develop
+'''
+      }
+    }
   }
 }

@@ -1,11 +1,4 @@
 pipeline {
-  agent {
-    docker {
-      image 'python:3'
-      args '-p 8080:8080 -p 5000:5000'
-    }
-
-  }
   stages {
     stage('Pull Data') {
       steps {
@@ -38,7 +31,7 @@ fi
         branch 'feature/*'
       }
       steps {
-        sh 'python3 backend/test_integration.py'
+        sh 'python backend/test_integration.py'
       }
     }
 

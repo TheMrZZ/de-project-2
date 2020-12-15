@@ -5,8 +5,8 @@ pipeline {
     stage('Pull Data') {
       steps {
         powershell '''
-Invoke-WebRequest 'https://infallible-boyd-e34277.netlify.app/model_file_complicated_no_stopwords' -OutFile './backend/model_file'
-Invoke-WebRequest 'https://infallible-boyd-e34277.netlify.app/tweets.csv' -OutFile './backend/tweets.csv'
+cp C:/Users/Florian/Documents/de-project-2/backend/model_file_complicated_no_stopwords ./backend/model_file
+cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.csv
 '''
       }
     }
@@ -20,7 +20,7 @@ Invoke-WebRequest 'https://infallible-boyd-e34277.netlify.app/tweets.csv' -OutFi
 
     stage('Run integration & unit tests') {
       when {
-        branch 'feature/*'
+        branch 'feature*'
       }
       steps {
         powershell '''

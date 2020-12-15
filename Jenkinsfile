@@ -89,7 +89,7 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
 
         powershell 'git push --set-upstream origin main'
 
-        withCredentials([usernamePassword(credentialsId: 'My-Jenkins-App-DE-2', passwordVariable: 'pass', usernameVariable: 'user')]) {
+        withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'pass', usernameVariable: 'user')]) {
           withEnv(["USER=$user", "PASS=$pass"]) {
             powershell 'docker login --username $env:USER --password $env:PASS'
           }

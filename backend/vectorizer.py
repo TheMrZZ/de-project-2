@@ -13,7 +13,7 @@ nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
 
 current_dir = path.dirname(__file__)
-MODEL_FILE_NAME = path.join(current_dir, 'model_file_complicated')
+MODEL_FILE_NAME = path.join(current_dir, 'model_file')
 
 # IMPORT DATA
 data = pd.read_csv(path.join(current_dir, 'tweets.csv'))
@@ -49,7 +49,7 @@ def remove_punctuation(tokens):
     return [t for t in tokens if not t.is_punct or t.is_space]
 
 
-def process(text, *, remove_stopwords=False, remove_punct=False):
+def process(text, *, remove_stopwords=True, remove_punct=False):
     norm = normalize(text, remove_stopwords)
     tokens = list(tokenizer(norm))
     if remove_punct:

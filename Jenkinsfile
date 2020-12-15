@@ -62,5 +62,35 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
         powershell 'git push --set-upstream origin release'
       }
     }
+
+    stage('Push on main') {
+      when {
+        branch 'release'
+      }
+
+      steps {
+        input 'Put in production?'
+
+        powershell 'git config --global user.email "florianernst59@gmail.com"'
+        powershell 'git config --global user.name "Florian ERNST"'
+        powershell 'git fetch --all'
+        powershell 'git checkout -B develop'
+        powershell 'git pull'
+        powershell 'git checkout -B release'
+        powershell 'git pull'
+        powershell 'git merge develop'
+
+        withCredentials([usernamePassword(credentialsId: 'My-Jenkins-App-DE-2', passwordVariable: 'pass', usernameVariable: 'user')]) {
+          withEnv(["USER=$user", "PASS=$pass"]) {
+            powershell 'git remote remove origin'
+            powershell 'git remote add origin "https://TheMrZZ:$env:PASS@github.com/TheMrZZ/de-project-2.git"'
+          }
+        }
+
+        powershell 'git push --set-upstream origin release'
+
+        powershell 'echo "Application in production"'
+      }
+    }
   }
 }

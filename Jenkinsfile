@@ -37,7 +37,7 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
       }
     }
 
-    stage('Push on main') {
+    stage('Push on release') {
       when {
         branch 'develop'
       }
@@ -50,8 +50,25 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
         powershell 'git pull'
         powershell 'git merge develop'
 
-        git branch: 'release', credentialsId: 'My-Jenkins-App-DE-2', url: 'https://github.com/TheMrZZ/de-project-2.git'
+        withCredentials([usernamePassword(credentialsId: 'My-Jenkins-App-DE-2', passwordVariable: 'pass', usernameVariable: 'user')]) {
+          withEnv(["USER=$user", "PASS=$pass"]) {
+            powershell 'git remote add origin "https://TheMrZZ:$env:PASS@github.com/TheMrZZ/de-project-2.git"'
+          }
+        }
+
         powershell 'git push --set-upstream origin release'
+      }
+    }
+
+    stage('Push on main') {
+      when {
+        branch 'release'
+      }
+
+      steps {
+        input {
+          message 'Do you want to push into production?'
+        }
       }
     }
   }

@@ -49,7 +49,7 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
         powershell 'git checkout main'
         powershell 'git pull'
         powershell 'git merge origin/develop'
-        powershell 'git push'
+        powershell 'git push --set-upstream origin main'
       }
     }
   }

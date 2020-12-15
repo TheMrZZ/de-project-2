@@ -44,10 +44,12 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
 
       steps {
         powershell 'git fetch --all'
+        powershell 'git checkout develop'
+        powershell 'git pull'
         powershell 'git checkout main'
         powershell 'git pull'
         powershell 'git merge origin/develop'
-        powershell 'git push origin main'
+        powershell 'git push'
       }
     }
   }

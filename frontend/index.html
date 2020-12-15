@@ -2,62 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sentence sentiment classifier</title>
+    <title>Donald Trump Tweets finder</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"
+            integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww=="
+            crossorigin="anonymous"></script>
+
     <script>
-        const images = {
-            positive: '#img1',
-            neutral: '#img2',
-            negative: '#img3',
-        }
-
-        const colors = {
-            positive: 'green',
-            negative: 'red',
-            neutral: 'gray',
-        }
-
-        function setResult(result, color) {
-            const resultElement = document.getElementById('result')
-            resultElement.innerText = result
-            resultElement.style.color = color || 'black'
+        function setResult(tweets) {
+            tweets.forEach((tweet, i) => {
+                const resultElement = document.getElementById('result' + i)
+                resultElement.innerHTML = `<iframe border=0 frameborder=0 height=250 width=550 src="https://twitframe.com/show?url=https://www.twitter.com${tweet.link}"></iframe>`
+            })
         }
 
         async function onInputChange() {
+            console.log('hi')
             const value = document.getElementById('sentence').value
 
-            if (!value.length) {
-                document.querySelectorAll('img').forEach(elem => elem.classList.remove('current'))
-                setResult('')
-                return
-            }
-
-            const response = await fetch('http://localhost:5000/classify_sentence', {
+            const response = await fetch('http://localhost:5000/similar_tweets', {
                 method: 'POST',
                 body: JSON.stringify({
-                    sentence: value
+                    text: value
                 }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
 
-            const {sentiment} = await response.json()
+            const tweets = await response.json()
 
-            setResult(sentiment, colors[sentiment])
-
-            document.querySelectorAll('img').forEach(elem => elem.classList.remove('current'))
-            document.querySelector(images[sentiment]).classList.add('current')
+            setResult(tweets)
         }
+
+        const onInputChangeDebounced = _.debounce(onInputChange, 500, {trailing: true})
     </script>
 
     <style>
         html {
             background-color: rgba(0, 0, 0, 0.92);
+            height: 100%;
         }
 
         body {
-            width: 600px;
-            height: 100vh;
+            width: 90%;
+            height: 100%;
+            overflow-y: hidden;
             margin: auto;
             padding: 40px;
             display: flex;
@@ -71,51 +60,53 @@
             text-align: center;
         }
 
-        #result {
+        .tweet {
             padding-top: 10px;
             font-size: 25px;
             font-weight: bold;
             text-align: center;
         }
 
-        .images {
+        .tweets {
             display: flex;
-            flex-flow: row nowrap;
-            justify-content: space-evenly;
-        }
-
-        img {
-            width: 150px;
-            height: auto;
-            opacity: 10%;
-        }
-
-        .current {
-            opacity: 100%;
+            flex-flow: row wrap;
+            justify-content: space-around;
+            overflow-y: scroll;
         }
     </style>
 </head>
 <body>
 
-<h1> Sentence Sentiment Analysis </h1>
+<h1> Donald Trump Tweets finder </h1>
 
 <!-- Input -->
-<label for="sentence"> Enter the sentence you want to classify:</label>
-<input type="text" id="sentence" oninput="onInputChange()">
+<label for="sentence"> Search for a Trump tweet:</label>
+<input type="text" id="sentence" oninput="onInputChangeDebounced()">
 
 <!-- Result -->
-<div id="result"></div>
+<div class="tweets">
+    <div class="tweet" id="result0"></div>
+    <div class="tweet" id="result1"></div>
+    <div class="tweet" id="result2"></div>
+    <div class="tweet" id="result3"></div>
+    <div class="tweet" id="result4"></div>
+    <div class="tweet" id="result5"></div>
+    <div class="tweet" id="result6"></div>
+    <div class="tweet" id="result7"></div>
+    <div class="tweet" id="result8"></div>
+    <div class="tweet" id="result9"></div>
+    <div class="tweet" id="result10"></div>
+    <div class="tweet" id="result11"></div>
+    <div class="tweet" id="result12"></div>
+    <div class="tweet" id="result13"></div>
+    <div class="tweet" id="result14"></div>
+    <div class="tweet" id="result15"></div>
+    <div class="tweet" id="result16"></div>
+    <div class="tweet" id="result17"></div>
+    <div class="tweet" id="result18"></div>
+    <div class="tweet" id="result19"></div>
+</div>
 
-<div class="images">
-    <img id="img3"
-         src="https://as2.ftcdn.net/jpg/00/64/49/05/500_F_64490545_o4ISczWQkXDK9vDTcjppKNkWJPxYSLa7.jpg"
-    >
-    <img id="img2"
-         src="https://image.shutterstock.com/image-photo/close-headshot-young-caucasian-man-260nw-1487254088.jpg"
-    >
-    <img id="img1"
-         src="https://previews.123rf.com/images/domenicogelermo/domenicogelermo1402/domenicogelermo140200346/26723684-young-happy-man-with-thumbs-up-sign-in-casuals-isolated-on-white-background-.jpg"
-    >
 </div>
 </body>
 </html>

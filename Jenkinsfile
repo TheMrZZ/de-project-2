@@ -44,11 +44,11 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
 
       steps {
         powershell 'git fetch --all'
-        powershell 'git checkout develop'
+        powershell 'git checkout -B develop'
         powershell 'git pull'
-        powershell 'git checkout release'
+        powershell 'git checkout -B release'
         powershell 'git pull'
-        powershell 'git merge origin/develop'
+        powershell 'git merge develop'
 
         git branch: 'release', credentialsId: 'My-Jenkins-App-DE-2', url: 'https://github.com/TheMrZZ/de-project-2.git'
         powershell 'git push --set-upstream origin release'

@@ -51,6 +51,7 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
         powershell 'git merge develop'
         powershell 'git config --global user.email "florianernst59@gmail.com"'
         powershell 'git config --global user.name "Florian ERNST"'
+        powershell 'git add .'
         powershell 'git commit -m "Automatic push"'
 
         withCredentials([usernamePassword(credentialsId: 'My-Jenkins-App-DE-2', passwordVariable: 'pass', usernameVariable: 'user')]) {

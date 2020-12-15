@@ -47,9 +47,9 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
         powershell 'git config --global user.name "Florian ERNST"'
         powershell 'git fetch --all'
         powershell 'git checkout -B develop'
-        powershell 'git pull'
+        powershell 'git pull origin develop'
         powershell 'git checkout -B release'
-        powershell 'git pull'
+        powershell 'git pull origin release'
         powershell 'git merge develop'
 
         withCredentials([usernamePassword(credentialsId: 'My-Jenkins-App-DE-2', passwordVariable: 'pass', usernameVariable: 'user')]) {

@@ -89,6 +89,12 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
 
         powershell 'git push --set-upstream origin main'
 
+        withCredentials([usernamePassword(credentialsId: 'My-Jenkins-App-DE-2', passwordVariable: 'pass', usernameVariable: 'user')]) {
+          withEnv(["USER=$user", "PASS=$pass"]) {
+            powershell 'docker login --username $env:USER --password $env:PASS'
+          }
+        }
+
         powershell 'docker build -t "themrzz/de-project-2:latest" .'
         powershell 'docker push themrzz/de-project-2:latest'
 

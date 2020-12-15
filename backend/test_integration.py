@@ -26,7 +26,6 @@ class MyTestCase(unittest.TestCase):
         tweet = self.get_similar_tweets('test')[0]
         self.assertEqual(type(tweet['text']), str)
         self.assertEqual(type(tweet['link']), str)
-        self.assertEqual(type(tweet['id']), int)
         self.assertEqual(type(tweet['author']), str)
 
 

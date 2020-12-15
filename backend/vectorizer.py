@@ -49,7 +49,7 @@ def remove_punctuation(tokens):
     return [t for t in tokens if not t.is_punct or t.is_space]
 
 
-def process(text, *, remove_stopwords=False, remove_punct=False):
+def process(text, *, remove_stopwords=True, remove_punct=False):
     norm = normalize(text, remove_stopwords)
     tokens = list(tokenizer(norm))
     if remove_punct:
@@ -71,10 +71,10 @@ def main():
         sentences.append(TaggedDocument(tweet_tokens, [ind]))
 
     # MODEL PARAMETERS
-    size = 30
-    context_window = 10
+    size = 300
+    context_window = 50
     min_count = 1
-    max_iter = 20
+    max_iter = 200
 
     # BUILD MODEL
     model = Doc2Vec(

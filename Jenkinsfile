@@ -89,7 +89,7 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
 
         powershell 'git push --set-upstream origin release'
 
-        powershell 'echo "Application in production"'
+        echo "The application is now in production."
       }
     }
   }

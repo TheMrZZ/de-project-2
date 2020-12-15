@@ -43,7 +43,9 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
       }
 
       steps {
-        powershell 'git checkout -b main --track origin/main'
+        powershell 'git fetch --all'
+        powershell 'git checkout -b main'
+        powershell 'git pull'
         powershell 'git merge origin/develop'
       }
     }

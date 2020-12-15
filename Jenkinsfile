@@ -34,7 +34,7 @@ fi
 
     stage('Run integration & unit tests') {
       when {
-        branch 'feature*'
+        branch 'feature/*'
       }
       steps {
         sh 'python3 backend/test_integration.py'

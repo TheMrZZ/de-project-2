@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+      docker {
+        image 'python:3'
+        args '-p 8080:8080 -p 5000:5000'
+    }
+  }
   stages {
     stage('Pull Data') {
       steps {
@@ -24,6 +29,15 @@ fi
       steps {
         archiveArtifacts 'backend/model_file'
         archiveArtifacts 'backend/tweets.csv'
+      }
+    }
+
+    stage('Run integration & unit tests') {
+      when {
+        branch 'feature*'
+      }
+      steps {
+        sh 'python3 backend/test_integration.py'
       }
     }
 

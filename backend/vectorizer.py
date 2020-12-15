@@ -13,7 +13,7 @@ nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
 
 current_dir = path.dirname(__file__)
-MODEL_FILE_NAME = path.join(current_dir, 'model_file')
+MODEL_FILE_NAME = path.join(current_dir, 'model_file_complicated')
 
 # IMPORT DATA
 data = pd.read_csv(path.join(current_dir, 'tweets.csv'))
@@ -71,10 +71,10 @@ def main():
         sentences.append(TaggedDocument(tweet_tokens, [ind]))
 
     # MODEL PARAMETERS
-    size = 30
-    context_window = 10
+    size = 300
+    context_window = 50
     min_count = 1
-    max_iter = 20
+    max_iter = 200
 
     # BUILD MODEL
     model = Doc2Vec(

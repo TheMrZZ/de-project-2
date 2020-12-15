@@ -1,27 +1,12 @@
 pipeline {
-  agent {
-    docker {
-      image 'python:3'
-      args '-p 8080:8080 -p 5000:5000'
-    }
-  }
+  agent any
 
   stages {
     stage('Pull Data') {
       steps {
-        sh '''MODEL_FILE=backend/model_file
-if [ -f "$MODEL_FILE" ]; then
-    echo "$MODEL_FILE exists."
-else 
-    wget -O $MODEL_FILE https://infallible-boyd-e34277.netlify.app/model_file_complicated_no_stopwords
-fi
-
-BACKEND_FILE=backend/tweets.csv
-if [ -f "$BACKEND_FILE" ]; then
-    echo "$BACKEND_FILE exists."
-else 
-    wget -O $BACKEND_FILE https://infallible-boyd-e34277.netlify.app/tweets.csv
-fi
+        bat '''
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://infallible-boyd-e34277.netlify.app/model_file_complicated_no_stopwords', 'backend/model_file')""
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://infallible-boyd-e34277.netlify.app/tweets.csv', 'backend/tweets.csv')""
 '''
       }
     }
@@ -38,7 +23,7 @@ fi
         branch 'feature/*'
       }
       steps {
-        sh 'python backend/test_integration.py'
+        bat 'python backend/test_integration.py'
       }
     }
 

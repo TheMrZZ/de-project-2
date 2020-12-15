@@ -60,15 +60,5 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
         powershell 'git push --set-upstream origin release'
       }
     }
-
-    stage('Push on main') {
-      when {
-        branch 'release'
-      }
-
-      steps {
-        input message 'Do you want to push into production?'
-      }
-    }
   }
 }

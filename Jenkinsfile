@@ -74,11 +74,11 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
         powershell 'git config --global user.email "florianernst59@gmail.com"'
         powershell 'git config --global user.name "Florian ERNST"'
         powershell 'git fetch --all'
-        powershell 'git checkout -B develop'
-        powershell 'git pull'
         powershell 'git checkout -B release'
-        powershell 'git pull'
-        powershell 'git merge develop'
+        powershell 'git pull origin release'
+        powershell 'git checkout -B main'
+        powershell 'git pull origin main'
+        powershell 'git merge release'
 
         withCredentials([usernamePassword(credentialsId: 'My-Jenkins-App-DE-2', passwordVariable: 'pass', usernameVariable: 'user')]) {
           withEnv(["USER=$user", "PASS=$pass"]) {
@@ -87,7 +87,10 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
           }
         }
 
-        powershell 'git push --set-upstream origin release'
+        powershell 'git push --set-upstream origin main'
+
+        powershell 'docker build -t "themrzz/de-project-2:latest" .'
+        powershell 'docker push themrzz/de-project-2:latest'
 
         echo "The application is now in production."
       }

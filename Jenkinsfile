@@ -54,6 +54,7 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
 
         withCredentials([usernamePassword(credentialsId: 'My-Jenkins-App-DE-2', passwordVariable: 'pass', usernameVariable: 'user')]) {
           withEnv(["USER=$user", "PASS=$pass"]) {
+            powershell 'git remote remove origin'
             powershell 'git remote add origin "https://TheMrZZ:$env:PASS@github.com/TheMrZZ/de-project-2.git"'
           }
         }

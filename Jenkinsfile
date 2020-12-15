@@ -24,7 +24,7 @@ cp C:/Users/Florian/Documents/de-project-2/backend/tweets.csv ./backend/tweets.c
       }
       steps {
         powershell '''
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 python backend/test_integration.py
 '''
       }

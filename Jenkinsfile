@@ -27,11 +27,5 @@ fi
       }
     }
 
-    stage('') {
-      steps {
-        waitUntil()
-      }
-    }
-
   }
 }

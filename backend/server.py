@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from prometheus_flask_exporter import PrometheusMetrics
 
 try:
     from .search import get_closest_tweet
@@ -8,19 +9,20 @@ except ImportError:
 
 app = Flask(__name__)
 CORS(app)
+metrics = PrometheusMetrics(app)
+
+total = 1
 
 
 @app.route('/similar_tweets', methods=['POST'])
+@metrics.counter('total_requests', 'Number of total requests', labels={'amount': total})
 def classify_sentence():
     text = request.json['text']
 
+    global total
+    total += 1
     tweets = get_closest_tweet(text)
     return jsonify(tweets)
-#
-
-@app.route('/hello', methods=['GET'])
-def hello():
-    return jsonify({'result': 'hello'})
 
 
 if __name__ == '__main__':

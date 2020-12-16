@@ -18,5 +18,10 @@ def classify_sentence():
     return jsonify(tweets)
 
 
+@app.route('/hello', methods=['GET'])
+def hello():
+    return jsonify({'result': 'hello'})
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')

@@ -13,7 +13,7 @@ nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
 
 current_dir = path.dirname(__file__)
-MODEL_FILE_NAME = path.join(current_dir, 'model_file')
+MODEL_FILE_NAME = path.join(current_dir, 'model_file_old')
 
 # IMPORT DATA
 data = pd.read_csv(path.join(current_dir, 'tweets.csv'))
